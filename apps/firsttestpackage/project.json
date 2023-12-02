@@ -1,0 +1,70 @@
+{
+  "name": "firsttestpackage",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/firsttestpackage/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/firsttestpackage",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/firsttestpackage/src/main.ts",
+        "tsConfig": "apps/firsttestpackage/tsconfig.app.json",
+        "assets": ["apps/firsttestpackage/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "firsttestpackage:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "firsttestpackage:build:development"
+        },
+        "production": {
+          "buildTarget": "firsttestpackage:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/firsttestpackage/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/firsttestpackage/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
