@@ -6,29 +6,21 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/first-package-common-lib",
         "main": "libs/first-package-common-lib/src/index.ts",
         "tsConfig": "libs/first-package-common-lib/tsconfig.lib.json",
-        "assets": [
-          "libs/first-package-common-lib/*.md"
-        ]
+        "assets": ["libs/first-package-common-lib/*.md"]
       }
     },
     "publish": {
       "command": "node tools/scripts/publish.mjs first-package-common-lib {args.ver} {args.tag}",
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "libs/first-package-common-lib/**/*.ts",
@@ -38,9 +30,7 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "libs/first-package-common-lib/jest.config.ts"
       }
@@ -52,6 +42,12 @@
         "changelog": true,
         "npm": true,
         "tagFormat": "first-package-common-lib-v${VERSION}"
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventionalcommits"
       }
     }
   },
