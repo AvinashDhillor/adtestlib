@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 export function firstPackageCommonLib(): string {
   return 'first-package-common-lib';
