@@ -42,13 +42,11 @@ jobs:
           echo "::set-output name=head_commit::${HEAD_COMMIT}"
 
       - name: Bump version of packages
-        run: npx nx affected --base last-release --target=version
+        run: npx nx affected --base="3fa1a5d3238006ed452e5a90082ace6180e51f6c" --head="1edbc14c882e2d9940023888374b2c591a2abd3c" --target=version
         shell: bash
 
       - name: Push changes to github
-        run: |
-          git tag -f last-release
-          git push origin last-release --force
+        run: git push origin --tags
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
