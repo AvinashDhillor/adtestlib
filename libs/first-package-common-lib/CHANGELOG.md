@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.2](https://github.com/AvinashDhillor/adtestlib/compare/first-package-common-lib-0.2.1...first-package-common-lib-0.2.2) (2023-12-03)
+
 ## [0.2.1](https://github.com/AvinashDhillor/adtestlib/compare/first-package-common-lib-0.2.0...first-package-common-lib-0.2.1) (2023-12-03)
 
 
