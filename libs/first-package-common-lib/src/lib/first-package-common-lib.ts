@@ -12,7 +12,7 @@ export function thisDoSum(): number {
   const name = _.get(data, 'name');
   console.log(name);
 
-  return 5000 + 1000;
+  return 5010 + 1000;
 }
 
 export function thisDoSub(): number {
