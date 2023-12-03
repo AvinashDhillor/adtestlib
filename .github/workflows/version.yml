@@ -34,29 +34,19 @@ jobs:
           git config --global user.name "github-actions[bot]"
         shell: bash
 
+      - name: Bump version of packages
+        run: npx nx run ${{ inputs.tag-to-search }}:version
+        shell: bash
+
       - name: Determine Old and Latest Commits
         id: commit-info
         run: |
           TAG_PREFIX="${{ inputs.tag-to-search }}"
 
-          LATEST_TAG=$(git describe --tags --match "$TAG_PREFIX*" --abbrev=0 2>/dev/null)
+          LATEST_TAG=$(git describe --tags --match "$TAG_PREFIX*" --abbrev=0)
 
-          if [ -z "$LATEST_TAG" ]; then
-            LATEST_TAG=$(git rev-parse HEAD)
-            LATEST_TAG="HEAD^"
-          fi
-
-          COMMIT=$(git rev-list -n 1 $LATEST_TAG)
-          echo "::set-output name=old_commit::${COMMIT}"
-
-      - name: Bump version of packages
-        run: npx nx run ${{ inputs.tag-to-search }}:version
-        shell: bash
+          echo "::set-output name=new_tag::${LATEST_TAG}"
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          force: true
-          tags: true
+        run: git push origin ${{ steps.commit-info.outputs.new_tag }}
+        shell: bash
