@@ -53,8 +53,10 @@ jobs:
         run: npx nx run ${{ inputs.tag-to-search }}:version
         shell: bash
 
-      - name: Push changes to github
-        run: git push origin main --follow-tags
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          force: true
+          tags: true
