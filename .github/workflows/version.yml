@@ -42,7 +42,7 @@ jobs:
           echo "::set-output name=head_commit::${HEAD_COMMIT}"
 
       - name: Bump version of packages
-        run: npx nx affected --target=version
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=$(git rev-parse HEAD)  --target=version
         shell: bash
 
       - name: Push changes to github
