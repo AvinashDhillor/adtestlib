@@ -16,5 +16,5 @@ export function thisDoSum(): number {
 }
 
 export function thisDoSub(): number {
-  return 10 - 8;
+  return 10 - 8 - 1;
 }
