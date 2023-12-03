@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.6.2](https://github.com/AvinashDhillor/adtestlib/compare/first-package-common-lib-0.6.1...first-package-common-lib-0.6.2) (2023-12-03)
+
+
+### Bug Fixes
+
+* serious bug fixed ([53535d2](https://github.com/AvinashDhillor/adtestlib/commit/53535d256d6864a06e044e86206df09fe42627b8))
+
 ## [0.6.1](https://github.com/AvinashDhillor/adtestlib/compare/first-package-common-lib-0.6.0...first-package-common-lib-0.6.1) (2023-12-03)
 
 
