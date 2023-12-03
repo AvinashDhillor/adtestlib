@@ -6,6 +6,9 @@ on:
       version-bump:
         description: 'The type of version bump to perform. Must be one of: major, minor, patch, premajor, preminor, prepatch, prerelease'
         required: true
+      tag-to-search:
+        description: 'Enter application name'
+        required: true
 
 permissions:
   contents: write
@@ -34,15 +37,20 @@ jobs:
       - name: Determine Old and Latest Commits
         id: commit-info
         run: |
-          export LAST_TAG_COMMIT=$(git rev-list -n 1 $(git describe --abbrev=0 --tags))
-          export HEAD_COMMIT=$(git rev-parse HEAD)
-          echo $LAST_TAG_COMMIT
-          echo $HEAD_COMMIT
-          echo "::set-output name=old_commit::${LAST_TAG_COMMIT}"
-          echo "::set-output name=head_commit::${HEAD_COMMIT}"
+          TAG_PREFIX= ${{ inputs.tag-to-search }}
+
+          LATEST_TAG=$(git describe --tags --match "$TAG_PREFIX*" --abbrev=0 2>/dev/null)
+
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG=$(git rev-parse HEAD)
+            LATEST_TAG="HEAD^"
+          fi
+
+          COMMIT=$(git rev-list -n 1 $LATEST_TAG)
+          echo "::set-output name=old_commit::${COMMIT}"
 
       - name: Bump version of packages
-        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=${{ steps.commit-info.outputs.head_commit }} --target=version
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --target=version
         shell: bash
 
       - name: Push changes to github
