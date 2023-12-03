@@ -9,6 +9,13 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 * feature added ([9e1c1c9](https://github.com/AvinashDhillor/adtestlib/commit/9e1c1c9a10e38eda6e7aa8ceb17a1a75fa164018))
 
+## [0.2.1](https://github.com/AvinashDhillor/adtestlib/compare/firsttestpackage-0.2.0...firsttestpackage-0.2.1) (2023-12-03)
+
+
+### Bug Fixes
+
+* feature added ([9e1c1c9](https://github.com/AvinashDhillor/adtestlib/commit/9e1c1c9a10e38eda6e7aa8ceb17a1a75fa164018))
+
 ## [0.2.0](https://github.com/AvinashDhillor/adtestlib/compare/firsttestpackage-0.1.1...firsttestpackage-0.2.0) (2023-12-03)
 
 
