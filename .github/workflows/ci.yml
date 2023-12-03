@@ -21,12 +21,16 @@ jobs:
       - name: Install node, npm, and dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Print Environment Info
-        run: npx lerna info
-        shell: bash
+      - name: Determine Old and Latest Commits
+        id: commit-info
+        run: |
+          export LAST_TAG_COMMIT=$(git rev-list -n 1 $(git describe --abbrev=0 --tags))
+          export HEAD_COMMIT=$(git rev-parse HEAD)
+          echo "::set-output name=old_commit::${LAST_TAG_COMMIT}"
+          echo "::set-output name=head_commit::${HEAD_COMMIT}"
 
-      - name: Run Tests
-        run: npx lerna run test
+      - name: Bump version of packages
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=${{ steps.commit-info.outputs.head_commit }} --target=test
         shell: bash
 
   build:
@@ -42,31 +46,14 @@ jobs:
       - name: Install node, npm, and dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Print Environment Info
-        run: npx lerna info
-        shell: bash
+      - name: Determine Old and Latest Commits
+        id: commit-info
+        run: |
+          export LAST_TAG_COMMIT=$(git rev-list -n 1 $(git describe --abbrev=0 --tags))
+          export HEAD_COMMIT=$(git rev-parse HEAD)
+          echo "::set-output name=old_commit::${LAST_TAG_COMMIT}"
+          echo "::set-output name=head_commit::${HEAD_COMMIT}"
 
-      - name: Build Packages
-        run: npx lerna run build
-        shell: bash
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Install node, npm, and dependencies
-        uses: ./.github/actions/install-dependencies
-
-      - name: Print Environment Info
-        run: npx lerna info
-        shell: bash
-
-      - name: Lint Packages
-        run: npx lerna run lint
+      - name: Bump version of packages
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=${{ steps.commit-info.outputs.head_commit }} --target=build
         shell: bash
