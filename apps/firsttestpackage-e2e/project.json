@@ -18,6 +18,12 @@
       "options": {
         "lintFilePatterns": ["apps/firsttestpackage-e2e/**/*.{js,ts}"]
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventionalcommits"
+      }
     }
   }
 }
