@@ -3,5 +3,5 @@ export function firstPackageCommonLib(): string {
 }
 
 export function thisDoSum(): number {
-  return 2000;
+  return 3000;
 }
