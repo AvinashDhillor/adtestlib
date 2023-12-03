@@ -14,3 +14,7 @@ export function thisDoSum(): number {
 
   return 5000 + 1000;
 }
+
+export function thisDoSub(): number {
+  return 10 - 5;
+}
