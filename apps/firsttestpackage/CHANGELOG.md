@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/AvinashDhillor/adtestlib/compare/firsttestpackage-0.1.1...firsttestpackage-0.2.0) (2023-12-03)
+
+
+### Features
+
+* feature added ([d4b22ab](https://github.com/AvinashDhillor/adtestlib/commit/d4b22ab9fcbfe40d3550abf52251baf0b503dfce))
+
+
+### Bug Fixes
+
+* bug fixes ([f7cbabd](https://github.com/AvinashDhillor/adtestlib/commit/f7cbabd851b56b8621979b8c0299fcc014b7f905))
+
 ## [0.1.1](https://github.com/AvinashDhillor/adtestlib/compare/firsttestpackage-0.1.0...firsttestpackage-0.1.1) (2023-12-03)
 
 
