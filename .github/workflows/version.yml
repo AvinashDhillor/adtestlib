@@ -35,8 +35,20 @@ jobs:
           git config --global user.name "github-actions[bot]"
         shell: bash
 
+      - name: Determine Old and Latest Commits
+        id: commit-info
+        run: |
+          export LAST_TAG_COMMIT=$(git rev-list -n 1 $(git describe --abbrev=0 --tags))
+          export HEAD_COMMIT=$(git rev-parse HEAD)
+          echo "::set-output name=old_commit::${LAST_TAG_COMMIT}"
+          echo "::set-output name=head_commit::${HEAD_COMMIT}"
+
       - name: Bump version of packages
-        run: npx lerna version ${{ inputs.version-bump }} --yes
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=${{ steps.commit-info.outputs.head_commit }} --target=version
+        shell: bash
+
+      - name: Push changes to github
+        run: git push origin main --follow-tags
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

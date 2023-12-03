@@ -23,5 +23,5 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: Publish packages from git
-        run: npx lerna publish from-git -y
+        run: npx nx run first-package-common-lib:deploy
         shell: bash
