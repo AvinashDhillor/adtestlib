@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.1](https://github.com/AvinashDhillor/adtestlib/compare/first-package-common-lib-0.5.0...first-package-common-lib-0.5.1) (2023-12-03)
+
+
+### Bug Fixes
+
+* lodash import fixed ([0fc07ea](https://github.com/AvinashDhillor/adtestlib/commit/0fc07ea1a8098c268570b092ff5c3e03f549be0b))
+
 ## [0.5.0](https://github.com/AvinashDhillor/adtestlib/compare/first-package-common-lib-0.4.0...first-package-common-lib-0.5.0) (2023-12-03)
 
 
