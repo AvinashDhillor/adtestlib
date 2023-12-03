@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "libs/**"
+  pull_request:
+    types: [assigned, opened, synchronize, reopened, labeled]
+    paths:
+      - "libs/**"
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install node, npm, and dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Determine Old and Latest Commits
+        id: commit-info
+        run: |
+          export LAST_TAG_COMMIT=$(git rev-list -n 1 $(git describe --abbrev=0 --tags))
+          export HEAD_COMMIT=$(git rev-parse HEAD)
+          echo "::set-output name=old_commit::${LAST_TAG_COMMIT}"
+          echo "::set-output name=head_commit::${HEAD_COMMIT}"
+
+      - name: Bump version of packages
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=${{ steps.commit-info.outputs.head_commit }} --target=test
+        shell: bash
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install node, npm, and dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Determine Old and Latest Commits
+        id: commit-info
+        run: |
+          export LAST_TAG_COMMIT=$(git rev-list -n 1 $(git describe --abbrev=0 --tags))
+          export HEAD_COMMIT=$(git rev-parse HEAD)
+          echo "::set-output name=old_commit::${LAST_TAG_COMMIT}"
+          echo "::set-output name=head_commit::${HEAD_COMMIT}"
+
+      - name: Bump version of packages
+        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --head=${{ steps.commit-info.outputs.head_commit }} --target=build
+        shell: bash

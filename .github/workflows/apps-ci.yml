@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "apps/**"
   pull_request:
     types: [assigned, opened, synchronize, reopened, labeled]
+    paths:
+      - "apps/**"
 
 jobs:
   test:
