@@ -1,31 +1,72 @@
-name: release
+name: CI
 
 on:
-  - workflow_dispatch
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [assigned, opened, synchronize, reopened, labeled]
 
 jobs:
-  release:
+  test:
+    name: Unit Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+
+      - name: Install node, npm, and dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Print Environment Info
+        run: npx lerna info
+        shell: bash
+
+      - name: Run Tests
+        run: npx lerna run test
+        shell: bash
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          node-version: '18'
-      - name: Setup Git
-        run: |
-          git config user.name "GitHub Bot"
-          git config user.email "gituser@example.com"
-      - run: yarn install --frozen-lockfile
-      - name: Version
+          fetch-depth: 0
+
+      - name: Install node, npm, and dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Print Environment Info
+        run: npx lerna info
         shell: bash
-        run: yarn nx affected --base=last-release --target=version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tag last-release
+
+      - name: Build Packages
+        run: npx lerna run build
         shell: bash
-        run: |
-          git tag -f last-release
-          git push origin last-release --force
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install node, npm, and dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Print Environment Info
+        run: npx lerna info
+        shell: bash
+
+      - name: Lint Packages
+        run: npx lerna run lint
+        shell: bash
