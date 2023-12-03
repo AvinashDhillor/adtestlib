@@ -50,7 +50,7 @@ jobs:
           echo "::set-output name=old_commit::${COMMIT}"
 
       - name: Bump version of packages
-        run: npx nx affected --base=${{ steps.commit-info.outputs.old_commit }} --target=version
+        run: npx nx run ${{ inputs.tag-to-search }}:version
         shell: bash
 
       - name: Push changes to github
