@@ -64,6 +64,12 @@
       "options": {
         "jestConfig": "apps/firsttestpackage/jest.config.ts"
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventionalcommits"
+      }
     }
   },
   "tags": []
