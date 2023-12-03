@@ -37,7 +37,7 @@ jobs:
       - name: Determine Old and Latest Commits
         id: commit-info
         run: |
-          TAG_PREFIX= ${{ inputs.tag-to-search }}
+          TAG_PREFIX=${{ inputs.tag-to-search }}
 
           LATEST_TAG=$(git describe --tags --match "$TAG_PREFIX*" --abbrev=0 2>/dev/null)
 
