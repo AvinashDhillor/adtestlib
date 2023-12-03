@@ -4,4 +4,4 @@ console.log('Hello World');
 
 console.log("Let's print lib sum");
 
-console.log(thisDoSum() + 20);
+console.log(thisDoSum() + 20 + 20);
