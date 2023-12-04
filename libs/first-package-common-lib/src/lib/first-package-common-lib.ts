@@ -18,3 +18,11 @@ export function thisDoSum(): number {
 export function thisDoSub(): number {
   return 10 - 1;
 }
+
+export function newFunction(): number {
+  return 111;
+}
+
+export function aaa(): number {
+  return 222;
+}
